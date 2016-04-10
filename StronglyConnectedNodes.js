@@ -27,9 +27,9 @@ function stronglyConnectedNodes(initialGraph) {
 }
 
 function strongConnnect(graph, root) {
-    var resulsSet = [];
+    var resultSet = [];
     var todo = [root];
-    var stack = new Stack();
+    var path = new Stack();
     var globalIndex = 0;
     var key, node, todoLength;
     while (todo.length > 0) {
@@ -44,18 +44,19 @@ function strongConnnect(graph, root) {
         if (graph[key].index < 0) {
             node = updateNode(graph[key], globalIndex);
             globalIndex++;
-            stack.push(key);
+            path.push(key);
             node.succs.forEach(processSucc);
         } else {
             node = graph[key];
         }
-        // it is a leaf on the DFS tree or all children have been visited
+        // it is a leaf on the DFS tree or all children have been visited,
+        // so no new nodes were added to the todo list.
         if (todoLength === todo.length) {
             todo.pop();
             processNode(node);
         }
     }
-    return resulsSet;
+    return resultSet;
 
     function processNode(node) {
         var components = [];
@@ -63,9 +64,9 @@ function strongConnnect(graph, root) {
             graph[node.pred].lowLink = Math.min(graph[node.pred].lowLink, node.lowLink);
         }
         if (graph[key].lowLink === graph[key].index) {
-            components = getComponents(key, stack);
+            components = getComponents(key, path);
             if (components.length > 0){
-                resulsSet.push(components);
+                resultSet.push(components);
             }
         }
     }
@@ -76,18 +77,18 @@ function strongConnnect(graph, root) {
             todo.push(succKey);
             // keep the back reference for update later
             succNode.pred = key;
-        } else if (stack.contains(succKey)) {
+        } else if (path.contains(succKey)) {
             node.lowLink = Math.min(node.lowLink, succNode.index);
         }
     }
 }
 
-function getComponents(key, stack) {
+function getComponents(key, path) {
     var components = [];
     var component = null;
-    if (stack.length() > 0) {
+    if (path.length() > 0) {
         do {
-            component = stack.pop();
+            component = path.pop();
             components.push(component);
         } while (key !== component);
     }
