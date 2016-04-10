@@ -41,13 +41,12 @@ function strongConnnect(graph, root) {
             todo.pop();
             continue;
         }
+        node = graph[key];
         if (graph[key].index < 0) {
-            node = updateNode(graph[key], globalIndex);
+            updateNode(node, globalIndex);
             globalIndex++;
             path.push(key);
             node.succs.forEach(processSucc);
-        } else {
-            node = graph[key];
         }
         // it is a leaf on the DFS tree or all children have been visited,
         // so no new nodes were added to the todo list.
