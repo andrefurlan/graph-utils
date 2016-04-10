@@ -9,7 +9,7 @@ function Stack(init) {
     return this;
 }
 Stack.prototype.peek = function() {
-    return array[array.length - 1];
+    return this.array[this.array.length - 1];
 }
 Stack.prototype.pop = function() {
     var key = this.array.pop();
