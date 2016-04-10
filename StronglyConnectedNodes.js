@@ -52,19 +52,27 @@ function strongConnnect(graph, root) {
         // it is a leaf on the DFS tree or all children have been visited
         if (todoLength === todo.length) {
             todo.pop();
-            if (node.pred) {
-                graph[node.pred].lowLink = Math.min(graph[node.pred].lowLink, node.lowLink);
-            }
-            if (graph[key].lowLink === graph[key].index) {
-                getComponents(key);
-            }
+            processNode(node);
         }
     }
     return resulsSet;
 
+    function processNode(node) {
+        var components = [];
+        if (node.pred) {
+            graph[node.pred].lowLink = Math.min(graph[node.pred].lowLink, node.lowLink);
+        }
+        if (graph[key].lowLink === graph[key].index) {
+            components = getComponents(key, stack);
+            if (components.length > 0){
+                resulsSet.push(components);
+            }
+        }
+    }
+
     function processSucc(succKey) {
         var succNode = graph[succKey];
-        if (succNode.index < 0) {
+        if (succNode && succNode.index < 0) {
             todo.push(succKey);
             // keep the back reference for update later
             succNode.pred = key;
@@ -72,20 +80,18 @@ function strongConnnect(graph, root) {
             node.lowLink = Math.min(node.lowLink, succNode.index);
         }
     }
+}
 
-    function getComponents(key) {
-        var components = [];
-        var component = null;
-        if (stack.length() > 0) {
-            do {
-                component = stack.pop();
-                components.push(component);
-            } while (key !== component);
-        }
-        if (components.length > 0){
-            resulsSet.push(components);
-        }
+function getComponents(key, stack) {
+    var components = [];
+    var component = null;
+    if (stack.length() > 0) {
+        do {
+            component = stack.pop();
+            components.push(component);
+        } while (key !== component);
     }
+    return components;
 }
 
 function updateNode(node, index) {
