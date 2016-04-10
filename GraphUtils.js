@@ -1,1 +1,1 @@
-exports.StronglyConnectedNodes = require('./StronglyConnectedNodes.js');
+exports.stronglyConnectedNodes = require('./StronglyConnectedNodes.js').stronglyConnectedNodes;
