@@ -1,0 +1,15 @@
+{
+  "name": "graph utils",
+  "version": "1.0.0",
+  "description": "My implementations of some nice graph algorithms",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^2.4.5"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Andre Furlan Bueno",
+  "license": "ISC"
+}
