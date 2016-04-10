@@ -2,6 +2,16 @@ exports.stronglyConnectedNodes = stronglyConnectedNodes;
 
 var Stack = require('./DataStructures.js').Stack;
 
+/**
+ * Iterative implementation of Tarjan's algorithm for finding
+ * strongly connected nodes in a graph
+ * @param initialGraph: Graph
+ * @typeDef Graph
+ * {
+ *  "A": {succs:["B"]},
+ *  "B": {succs:[]}
+ * }
+ */
 function stronglyConnectedNodes(initialGraph) {
     var graph = initializeGraph(initialGraph);
     var keys = Object.keys(graph);
@@ -27,6 +37,10 @@ function strongConnnect(graph, root) {
         // don't pop the node from todo yet, the node will only be processed when it is
         // a leaf or all it's children have been processed
         key = todo[todoLength - 1];
+        if (!graph[key]) {
+            todo.pop();
+            continue;
+        }
         if (graph[key].index < 0) {
             node = updateNode(graph[key], index);
             index++;
@@ -52,6 +66,7 @@ function strongConnnect(graph, root) {
         var succNode = graph[succKey];
         if (succNode.index < 0) {
             todo.push(succKey);
+            // keep the back reference for update later
             succNode.pred = key;
         } else if (stack.contains(succKey)) {
             node.lowLink = Math.min(node.lowLink, succNode.index);
@@ -95,5 +110,3 @@ function initializeGraph(initialGraph) {
     }
     return graph;
 }
-
-// Data Structures
