@@ -23,7 +23,7 @@ function stronglyConnectedNodes(initialGraph) {
             Array.prototype.push.apply(scc, strongConnnect(graph, key));
         }
     }
-    return scc
+    return scc;
 }
 
 function strongConnnect(graph, root) {
@@ -97,7 +97,6 @@ function getComponents(key, path) {
 function updateNode(node, globalIndex) {
     node.index = globalIndex;
     node.lowLink = globalIndex;
-    return node;
 }
 
 function initializeGraph(initialGraph) {
