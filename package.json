@@ -1,5 +1,5 @@
 {
-  "name": "graph utils",
+  "name": "graph-utils",
   "version": "1.0.0",
   "description": "My implementations of some nice graph algorithms",
   "main": "index.js",
