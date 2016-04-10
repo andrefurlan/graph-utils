@@ -30,7 +30,7 @@ function strongConnnect(graph, root) {
     var resulsSet = [];
     var todo = [root];
     var stack = new Stack();
-    var index = 0;
+    var globalIndex = 0;
     var key, node, todoLength;
     while (todo.length > 0) {
         todoLength = todo.length;
@@ -42,8 +42,8 @@ function strongConnnect(graph, root) {
             continue;
         }
         if (graph[key].index < 0) {
-            node = updateNode(graph[key], index);
-            index++;
+            node = updateNode(graph[key], globalIndex);
+            globalIndex++;
             stack.push(key);
             node.succs.forEach(processSucc);
         } else {
@@ -94,9 +94,9 @@ function getComponents(key, stack) {
     return components;
 }
 
-function updateNode(node, index) {
-    node.index = index;
-    node.lowLink = index;
+function updateNode(node, globalIndex) {
+    node.index = globalIndex;
+    node.lowLink = globalIndex;
     return node;
 }
 
