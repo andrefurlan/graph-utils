@@ -50,7 +50,8 @@ function strongConnnect(graph, root) {
         }
         // it is a leaf on the DFS tree or all children have been visited,
         // so no new nodes were added to the todo list.
-        if (todoLength === todo.length) {
+        // It must also be in the path, in case of weird cross edges
+        if (todoLength === todo.length && path.contains(key)) {
             todo.pop();
             processNode(node);
         }
@@ -59,7 +60,7 @@ function strongConnnect(graph, root) {
 
     function processNode(node) {
         var components = [];
-        if (node.pred) {
+        if (node.pred !== undefined) {
             graph[node.pred].lowLink = Math.min(graph[node.pred].lowLink, node.lowLink);
         }
         if (graph[key].lowLink === graph[key].index) {
